@@ -1,6 +1,6 @@
-# KV
+# Bitcoin Miner
 
-## 1 Problem definition
+## Problem definition
 
 Bitcoins (see http://en.wikipedia.org/wiki/Bitcoin) are the most popular
 crypto-currency in common use. At their hart, bitcoins use the hardness of cryptographic
@@ -19,7 +19,7 @@ ensure correctness.
 The goal of this first project is to use Elixir and the actor model to build a
 good solution to this problem that runs well on multi-core machines.
 
-## 2 Requirements
+## Requirements
 
 Input: The input provided (as command line to your ./project1) will be k,
 the required number of 0’s of the bitcoin.
