@@ -114,7 +114,7 @@ defmodule KV do
 
   def get_ip_addr do
     {:ok,lst} = :inet.getif() 
-    {x,:undefined,y} = List.last(lst)
+    x = elem(List.last(lst),0)    
     addr =  to_string(elem(x,0)) <> "." <>  to_string(elem(x,1)) <> "." <>  to_string(elem(x,2)) <> "." <>  to_string(elem(x,3))
     addr  
   end
