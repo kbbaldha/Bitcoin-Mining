@@ -141,7 +141,7 @@ defmodule KV do
 
       IO.puts "client started "
     
-        for x <- 0..200000 do
+        for x <- 0..8 do
 
           pid1 = spawn fn -> KV.get_str_from_server(server_name) end 
          # IO.inspect (pid1) 
@@ -162,7 +162,7 @@ defmodule KV do
     IO.puts "client started "
     
 
-        for x <- 0..100000 do
+        for x <- 0..8 do
           pid1 = spawn fn -> KV.get_str_from_server(server_name) end 
           IO.inspect (pid1) 
           # Task.async(fn ->
@@ -200,11 +200,16 @@ defmodule KV do
       {:noreply, [new_message | messages]}
       end
       
-    def handle_call({:print_message ,new_message}, _from,messages) do
+    def generate_string do
       length=20
       cg_sub = :crypto.strong_rand_bytes(length) |> Base.encode64 |> binary_part(0, 20)
       cg_str = "karanacharekar;"<> cg_sub
-      {:reply, {:news, cg_str,messages}, messages}
+    end
+      
+    def handle_call({:print_message ,new_message}, _from,messages) do
+      x = Task.async(&generate_string/0)  
+      
+      {:reply, {:news, Task.await(x),messages}, messages}
     end
       
     def handle_cast({:print_answer ,new_message},messages) do
