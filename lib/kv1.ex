@@ -17,13 +17,13 @@ defmodule KV do
    
 
   def get_k_value(server_name) do
-    {:news,size} = GenServer.call({:chat_room2,String.to_atom(server_name)},{:print_message,"karan"}, :infinity)    
+    {:news,size} = GenServer.call({:chat_room,String.to_atom(server_name)},{:print_message,"karan"}, :infinity)    
     size
   end
 
   def get_str_from_server(server_name,size) do
     #try do
-      #{:news,size} = GenServer.call({:chat_room2,String.to_atom(server_name)},{:print_message,"karan"}, :infinity)
+      #{:news,size} = GenServer.call({:chat_room,String.to_atom(server_name)},{:print_message,"karan"}, :infinity)
      # size = 5
       str = generate_string1
       {:p_val,ret,hashed} = process_sha_256(str,size)  
@@ -31,7 +31,7 @@ defmodule KV do
         #GenServer.cast({:chat_room,:"karan@192.168.0.147"},{:print_answer,""})
       else 
         IO.puts "Found coin : "<>str
-        GenServer.cast({:chat_room2,String.to_atom(server_name)},{:print_answer,{:p_val,ret,hashed}})
+        GenServer.cast({:chat_room,String.to_atom(server_name)},{:print_answer,{:p_val,ret,hashed}})
       end
     #catch type, error ->
      # {:error, {type, error}}
@@ -87,7 +87,7 @@ defmodule KV do
 
     IO.puts "server started "
     GenServer.start_link(__MODULE__, k, name: :chat_room)
-    GenServer.start_link(__MODULE__, k, name: :chat_room2)
+    GenServer.start_link(__MODULE__, k, name: :chat_room)
     IO.puts "genserver started"
     server_mining()
     IO.gets ""
@@ -144,16 +144,16 @@ defmodule KV do
     end
 
     def add_message(message) do
-      GenServer.cast(:chat_room2, {:add_message, message})
+      GenServer.cast(:chat_room, {:add_message, message})
     end
     def slice(message) do
-      GenServer.call(:chat_room2, {:slice_message, message})
+      GenServer.call(:chat_room, {:slice_message, message})
     end
     def print_message(message) do
-      GenServer.call(:chat_room2, {:print_message, message})
+      GenServer.call(:chat_room, {:print_message, message})
     end
     def print_answer(message) do
-      GenServer.cast(:chat_room2, {:print_answer, message})
+      GenServer.cast(:chat_room, {:print_answer, message})
     end
 
     # server callbacks
