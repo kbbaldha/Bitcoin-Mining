@@ -30,7 +30,7 @@ defmodule KV do
       if(ret == "") do
         #GenServer.cast({:chat_room,:"karan@192.168.0.147"},{:print_answer,""})
       else 
-        IO.puts "Found coin : "<>str
+        #IO.puts "Found coin : "<>str
         GenServer.cast({:chat_room,String.to_atom(server_name)},{:print_answer,{:p_val,ret,hashed}})
       end
     #catch type, error ->
@@ -188,7 +188,7 @@ defmodule KV do
     def handle_cast({:print_answer ,new_message},messages) do
       #x = Task.async(fn -> print_string(new_message, messages) end)
       {:p_val,a,b} = new_message
-      IO.puts " #{a} #{b}"
+      IO.puts "keyurbaldha;" <> "#{a}   #{b}"
       {:noreply, messages}
     end
       
